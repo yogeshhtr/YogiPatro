@@ -70,6 +70,14 @@ object Prefs {
     val lat: Double get() = Cities.ALL[city].second
     val lon: Double get() = Cities.ALL[city].third
     val festNotify: Boolean get() = try { Store.bool("fest_notify", true) } catch (_: Throwable) { true }
+    /** weekly holidays: 0 = Saturday only · 1 = Saturday and Sunday */
+    val weekend: Int get() = try { Store.int("weekend", 1) } catch (_: Throwable) { 1 }
+    /** text size: 0 normal · 1 large · 2 extra large */
+    val textSize: Int get() = try { Store.int("text_size", 0).coerceIn(0, 2) } catch (_: Throwable) { 0 }
+    val textScale: Float get() = when (textSize) { 1 -> 1.15f; 2 -> 1.3f; else -> 1f }
+
+    /** 0 = Sunday … 6 = Saturday */
+    fun weeklyHoliday(w: Int): Boolean = w == 6 || (w == 0 && weekend == 1)
 }
 
 fun Context.dp(v: Int): Int = (v * resources.displayMetrics.density + 0.5f).toInt()
@@ -88,7 +96,7 @@ fun Context.ripple(color: Int, radiusDp: Float): RippleDrawable =
 fun Context.label(s: CharSequence, size: Float = 15f, color: Int = C.TEXT, bold: Boolean = false): TextView =
     TextView(this).apply {
         text = s
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, size * Prefs.textScale)
         setTextColor(color)
         if (bold) typeface = Typeface.DEFAULT_BOLD
     }

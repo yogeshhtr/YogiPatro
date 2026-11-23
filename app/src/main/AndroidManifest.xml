@@ -17,6 +17,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -35,6 +36,30 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/patro_widget" />
+        </receiver>
+
+        <receiver
+            android:name=".PatroSmallWidget"
+            android:exported="true"
+            android:label="@string/widget_small">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/patro_widget_small" />
+        </receiver>
+
+        <receiver
+            android:name=".PatroMonthWidget"
+            android:exported="true"
+            android:label="@string/widget_month">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/patro_widget_month" />
         </receiver>
 
         <receiver

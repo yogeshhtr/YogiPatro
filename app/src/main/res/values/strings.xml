@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Yogi Patro</string>
-    <string name="widget_name">Yogi Patro · आजको मिति</string>
+    <string name="widget_name">Yogi Patro · आज र आउँदो पर्व</string>
+    <string name="widget_small">Yogi Patro · सानो मिति</string>
+    <string name="widget_month">Yogi Patro · पूरा महिना</string>
 </resources>

@@ -57,7 +57,12 @@ class MainActivity : AppCompatActivity() {
             Store.setBool("asked_notif", true)
             requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
         }
-        show(0)
+        show(intent?.getIntExtra("tab", 0) ?: 0)
+    }
+
+    override fun onNewIntent(i: Intent) {
+        super.onNewIntent(i)
+        if (i.hasExtra("tab")) show(i.getIntExtra("tab", 0))
     }
 
     override fun onResume() {
@@ -253,7 +258,7 @@ class MainActivity : AppCompatActivity() {
 
         val names = hbox()
         names.setPadding(dp(8), 0, dp(8), 0)
-        for (w in 0..6) names.addView(label(Bs.dayShort(w), 12f, if (w == 6) C.RED else C.SUB, true).apply { gravity = Gravity.CENTER },
+        for (w in 0..6) names.addView(label(Bs.dayShort(w), 12f, if (Prefs.weeklyHoliday(w)) C.RED else C.SUB, true).apply { gravity = Gravity.CENTER },
             LinearLayout.LayoutParams(0, WRAP, 1f))
         col.addView(names)
         val mv = MonthView(this)
@@ -517,13 +522,20 @@ class MainActivity : AppCompatActivity() {
             Patro.reset()
             refreshAll()
         })
+        c.addView(choice(t("साप्ताहिक बिदा", "Weekly holiday"), listOf(t("शनिबार मात्र", "Saturday only"),
+            t("शनिबार र आइतबार", "Saturday and Sunday")), Prefs.weekend) {
+            Store.setInt("weekend", it); refreshAll()
+        })
+        c.addView(choice(t("अक्षरको आकार", "Text size"), listOf(t("सामान्य", "Normal"), t("ठूलो", "Large"), t("अझ ठूलो", "Extra large")),
+            Prefs.textSize) { Store.setInt("text_size", it); refreshAll() })
         c.addView(choice(t("बिहान ७ बजे पर्वको सूचना", "Festival notice at 7 am"), listOf(t("हो", "On"), t("होइन", "Off")),
             if (Prefs.festNotify) 0 else 1) { Store.setBool("fest_notify", it == 0); show(4) })
         col.addView(c)
         val w = card()
         w.addView(label(t("होम स्क्रिन विजेट", "Home-screen widget"), 15f, C.TEXT, true))
-        w.addView(label(t("होम स्क्रिनमा थिच्नुहोस् → विजेट → Yogi Patro। आजको मिति, तिथि र पर्व देखिन्छ।",
-            "Hold the home screen → Widgets → Yogi Patro. Shows today's date, tithi and festival."), 13f, C.SUB).lin(t = dp(4)))
+        w.addView(label(t("होम स्क्रिनमा थिच्नुहोस् → विजेट → Yogi Patro। तीन किसिम: सानो मिति, आज + आउँदो पर्व, र पूरा महिना।",
+            "Hold the home screen → Widgets → Yogi Patro. Three kinds: small date, today + next festival, and the whole month."),
+            13f, C.SUB).lin(t = dp(4)))
         col.addView(w)
         val a = card()
         a.addView(label("Yogi Patro", 15f, C.TEXT, true))
@@ -538,5 +550,10 @@ class MainActivity : AppCompatActivity() {
     private fun refreshAll() {
         PatroWidget.updateAll(this)
         show(tab)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        PatroWidget.updateAll(this)
     }
 }

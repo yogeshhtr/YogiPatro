@@ -20,7 +20,7 @@ class DayInfo(
     val sunset: Double,
     val fests: List<Fest>
 ) {
-    val holiday: Boolean get() = weekday == 6 || fests.any { it.holiday }
+    val holiday: Boolean get() = Prefs.weeklyHoliday(weekday) || fests.any { it.holiday }
     fun tithiText(): String = Astro.lunarName(lunar, tithi, adhik) + " " + Astro.pakshaName(tithi) + " " + Astro.tithiName(tithi)
 }
 

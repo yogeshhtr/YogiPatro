@@ -19,7 +19,12 @@
   * Birthdays, anniversaries and shraddha by **BS date**, repeated every year, with the age.
   * A notification at 7 am on the day, plus a "tomorrow" note the day before.
 * **Festivals**: Dashain (Ghatasthapana to Kojagrat), Tihar (Kaag, Kukur, Laxmi Puja, Govardhan, Bhai Tika), Chhath, Teej, Janai Purnima, Gai Jatra, Janmashtami, Shivaratri, Holi, Buddha Jayanti, Ram Navami, the Lhosars, Mother's and Father's Day, national days and more.
-* **Home-screen widget**: today's date, day, tithi and festival. Works with Yogi Launcher.
+* **3 home-screen widgets** (they work with Yogi Launcher too):
+  * a small date
+  * today with the next festival
+  * the whole month
+* **Weekly holiday**: Saturday, or Saturday and Sunday.
+* **Text size**: normal, large or extra large.
 * Nepali or English, with Nepali or Western digits.
 
 ## How it works
