@@ -1,0 +1,4 @@
+# Compile the Patro ahead of time: smooth from the first start.
+HSPLcom/yogi/patro/**->**(**)**
+Lcom/yogi/patro/**;
+HSPLkotlin/**->**(**)**
